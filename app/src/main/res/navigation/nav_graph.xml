@@ -18,5 +18,12 @@
         android:id="@+id/resultFragment"
         android:name="com.example.hw_2_5month.UI.fragments.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <argument
+            android:name="Result"
+            app:argType="com.example.hw_2_5month.LoveModel" />
+        <action
+            android:id="@+id/action_resultFragment_to_loveCalculatorFragment"
+            app:destination="@id/loveCalculatorFragment" />
+    </fragment>
 </navigation>

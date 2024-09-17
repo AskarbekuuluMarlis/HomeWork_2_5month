@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.hw_2_5month.R
 import com.example.hw_2_5month.databinding.FragmentResultBinding
 
@@ -13,6 +16,7 @@ class ResultFragment : Fragment() {
 
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
+    private val args = navArgs<ResultFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,15 +36,12 @@ class ResultFragment : Fragment() {
         val secondName = arguments?.getString("secondName")
         val percentage = arguments?.getString("percentage")
 
-        tvYouResult.text = firstName
-        tvMeResult.text = secondName
-        tvProcent.text = "$percentage%"
+        tvYouResult.text = args.value.result.firstName
+        tvMeResult.text = args.value.result.secondName
+        tvProcent.text = "${args.value.result.percentage}%"
 
         btnTryAgain.setOnClickListener {
-            val loveCalculatorFragment = LoveCalculatorFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, loveCalculatorFragment).addToBackStack(null)
-                .commit()
+           findNavController().navigateUp()
         }
     }
 }

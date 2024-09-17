@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.hw_2_5month.LoveContract
 import com.example.hw_2_5month.LoveModel
 import com.example.hw_2_5month.LovePresenter
@@ -42,19 +43,19 @@ class LoveCalculatorFragment : Fragment(), LoveContract.View {
         }
     }
 
+
     override fun showResult(result: LoveModel) {
         val percentage = result.percentage.toIntOrNull() ?: 0
-        val bundle = Bundle().apply {
-            putString("firstName", result.firstName)
-            putString("secondName", result.secondName)
-            putInt("percentage", percentage)
-        }
-        val resultFragment = ResultFragment().apply {
-            arguments = bundle
-        }
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, resultFragment)
-            .addToBackStack(null).commit()
+        val action = LoveCalculatorFragmentDirections.actionLoveCalculatorFragmentToResultFragment(
+            LoveModel(
+                firstName = result.firstName,
+                secondName = result.secondName,
+                percentage = result.percentage,
+                result = result.result
+            )
+        )
+
+        findNavController().navigate(action)
     }
 
     override fun showError(message: String) {
